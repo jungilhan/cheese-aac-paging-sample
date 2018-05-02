@@ -8,16 +8,19 @@ PositionalDataSource로 REST API를 직접 호출해 페이징을 합니다. 또
 Flask 기반의 REST API 서버는 600여 개의 치즈 정보를 제공합니다. 오프셋 기반의 페이징으로 리스트의 일부분을 가져올 수 있고, '좋아요' 기능을 제공합니다. 
 
 ## 실행 방법
+```
 $ cd server
 $ virtualenv venv
 $ . venv/bin/activate
 (venv) pip install -r requirements.txt
 (venv) python app.py
+```
 
 ## 치즈 정보 가져오기
-GET /cheeses.json?offset=5&limit=10
+```GET /cheeses.json?offset=5&limit=10```
 
 Response
+```
 {
 	"cheeses": [
 		{
@@ -43,14 +46,17 @@ Response
 	],
 	"total": 650	
 }
+```
 
 ## '좋아요'하기
-PUT /cheeses/<int:cheese_id>/like.json
+```PUT /cheeses/<int:cheese_id>/like.json```
 
 Response
+```
 {
 	"description": "Abbaye de Belloc is a French Pyrenees, traditional farmhouse, semi-hard cheese from the Pays Basque region, made from unpasteurized sheep milk, with a fat content of 60%.",
 	"id": 1,
 	"like": 9,
 	"name": "Abbaye de Belloc"
 }
+```
