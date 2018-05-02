@@ -21,7 +21,6 @@ $ . venv/bin/activate
 ## 치즈 정보 가져오기
 ```GET /cheeses.json?offset=5&limit=10```
 
-Response
 ```
 {
   "cheeses": [
@@ -53,7 +52,6 @@ Response
 ## '좋아요'하기
 ```PUT /cheeses/<int:cheese_id>/like.json```
 
-Response
 ```
 {
   "description": "Abbaye de Belloc is a French Pyrenees, traditional farmhouse, semi-hard cheese from the Pays Basque region, made from unpasteurized sheep milk, with a fat content of 60%.",
