@@ -1,7 +1,7 @@
 # Cheese 
 This sample application shows you how the Paging Library works with a REST API.
 
-# Staring the Demo Server
+### Staring the Server
 ```
 $ cd server
 $ virtualenv venv
@@ -10,11 +10,11 @@ $ . venv/bin/activate
 (venv) python app.py
 ```
 
-# APIs
-## Get Cheeses
+### APIs
+#### Get Cheeses
 ```[GET] http://127.0.0.1:5000/cheeses.json?since=5&limit=2```
 
-### Parameters
+#### Parameters
 Name | Type | Description
 ---- | ---- | -----------
 since |	int | The integer ID of the last cheese that you've seen.
@@ -42,7 +42,7 @@ limit | int | The maximum number of cheeses that may be returned.
 }
 ```
 
-## Like a cheese
+#### Like a cheese
 ```PUT /cheeses/:id/like.json```
 
 ```
