@@ -2,6 +2,18 @@
 def find(cheese_id):
     return next(cheese for cheese in CHEESES if cheese['id'] == cheese_id)
 
+def get_next_index(cheese_id):
+    for index, cheese in enumerate(CHEESES):
+        if cheese['id'] == cheese_id:
+            return min(index + 1, len(CHEESES) - 1)
+    return 0
+
+def get_index(cheese_id):
+    for index, cheese in enumerate(CHEESES):
+        if cheese['id'] is cheese_id:
+            return index
+    return -1
+
 CHEESES = [
     {"name": "Abbaye de Belloc", "description": "Abbaye de Belloc is a French Pyrenees, traditional farmhouse, semi-hard cheese from the Pays Basque region, made from unpasteurized sheep milk, with a fat content of 60%."},
     {"name": "Abbaye du Mont des Cats", "description": "The Abbaye du Mont des Cats cheese is made by monks in a monastery of the same name in the town of Godewaersvelde, in Northern France."},

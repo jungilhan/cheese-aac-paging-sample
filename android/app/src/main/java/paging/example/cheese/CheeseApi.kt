@@ -20,7 +20,7 @@ interface CheeseApi {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(OkHttpClient.Builder()
                     .addInterceptor(HttpLoggingInterceptor()
-                        .setLevel(HttpLoggingInterceptor.Level.BASIC))
+                        .setLevel(HttpLoggingInterceptor.Level.BODY))
                     .build())
                 .baseUrl("http://10.0.2.2:5000")
                 .build()
@@ -29,7 +29,8 @@ interface CheeseApi {
     }
 
     @GET("/cheeses.json")
-    fun getCheeses(@Query("offset") offset: Int,
+    fun getCheeses(@Query("since") since: Int?,
+                   @Query("until") until: Int?,
                    @Query("limit") limit: Int): Single<Result<Cheese.Array>>
 
     @GET("/count.json")

@@ -1,8 +1,9 @@
 package paging.example.cheese
 
+import android.arch.lifecycle.Observer
 import android.arch.paging.DataSource
+import android.arch.paging.LivePagedListBuilder
 import android.arch.paging.PagedList
-import android.arch.paging.RxPagedListBuilder
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
@@ -30,12 +31,12 @@ class MainActivity : AppCompatActivity() {
                 .setInitialLoadSizeHint(20)
                 .setPageSize(10)
                 .setPrefetchDistance(5)
-                .setEnablePlaceholders(true)
+                .setEnablePlaceholders(false)
                 .build()
 
-        val builder = RxPagedListBuilder<Int, Cheese>(object: DataSource.Factory<Int, Cheese>() {
+        val builder = LivePagedListBuilder<Int, Cheese>(object: DataSource.Factory<Int, Cheese>() {
             override fun create(): DataSource<Int, Cheese> {
-                return CheesePositionalDataSource(cheeseApi)
+                return CheeseItemKeyedDataSource(cheeseApi)
             }
         }, config)
 
@@ -48,9 +49,9 @@ class MainActivity : AppCompatActivity() {
                 }
         })
         recyclerView.adapter = adapter
-        builder.buildObservable()
-            .subscribe {
+        builder.build()
+            .observe(this, Observer {
                 adapter.submitList(it)
-            }
+            })
     }
 }

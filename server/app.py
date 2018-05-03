@@ -1,6 +1,6 @@
 from flask import Flask, request
 from flask_restful import abort, Resource, Api
-from cheeses import CHEESES, find
+from cheeses import CHEESES, find, get_index, get_next_index
 
 app = Flask(__name__)
 api = Api(app)
@@ -18,12 +18,22 @@ class Cheese(Resource):
 class CheeseList(Resource):
     def get(self):
         args = request.args
-        if len(args) == 0:
-            abort(400, message="Query strings named offset and limit must not be empty.")
+        if len(args) == 0 or args['limit'].isnumeric() == False:
+            abort(400, message="Query strings named [since|until] and limit must be passed.")
 
-        start = int(args['offset'])
-        end = min(start + int(args['limit']), len(CHEESES))
-        return {'cheeses' : CHEESES[start:end], 'total': len(CHEESES) }
+        if 'since' in args:
+            since = int(args['since']) if args['since'].isnumeric() else 0
+            start = min(get_next_index(since), len(CHEESES) - 1)
+            end = min(start + int(args['limit']), len(CHEESES))
+            return {'cheeses': CHEESES[start:end], 'total': len(CHEESES)}
+        elif 'until' in args:
+            until = int(args['until']) if args['until'].isnumeric() else 0
+            end = get_index(until)
+            start = max(end - int(args['limit']), 0)
+            return {'cheeses': CHEESES[start:end], 'total': len(CHEESES)}
+        else:
+            end = int(args['limit'])
+            return {'cheeses': CHEESES[:end], 'total': len(CHEESES)}
 
 class LikingCheese(Resource):
     def put(self, cheese_id):
