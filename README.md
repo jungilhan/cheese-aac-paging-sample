@@ -24,7 +24,7 @@ until |	int | The integer ID of the first cheese that you've seen.
 around | int | The integer ID of the middle cheese that you've seen.
 limit | int | The maximum number of cheeses that may be returned.
 
-
+#### Response
 ```
 {
   "cheeses": [
