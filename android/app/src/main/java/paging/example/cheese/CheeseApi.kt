@@ -33,8 +33,9 @@ interface CheeseApi {
                    @Query("until") until: Int?,
                    @Query("limit") limit: Int): Single<Result<Cheese.Array>>
 
-    @GET("/count.json")
-    fun getCount(): Single<Result<Int>>
+    @GET("/cheeses.json")
+    fun getCheeses(@Query("around") since: Int?,
+                   @Query("limit") limit: Int): Single<Result<Cheese.Array>>
 
     @PUT("/cheeses/{id}/like.json")
     fun like(@Path("id") id: Int): Single<Result<Cheese>>

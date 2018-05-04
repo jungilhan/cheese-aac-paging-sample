@@ -8,12 +8,19 @@ class CheeseItemKeyedDataSource(private val cheeseApi: CheeseApi) : ItemKeyedDat
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Cheese>) {
         Log.d("DataSource", "loadInitial: ${params.requestedInitialKey} + ${params.requestedLoadSize}")
 
-        cheeseApi.getCheeses(since = params.requestedInitialKey, until = null, limit = params.requestedLoadSize)
-            .subscribe({ result ->
-                result.response()?.body()?.let {
+        if (params.requestedInitialKey == null) {
+            cheeseApi.getCheeses(since = params.requestedInitialKey, until = null, limit = params.requestedLoadSize)
+                .blockingGet()
+                .response()?.body()?.let {
                     callback.onResult(it.cheeses)
                 }
-            })
+        } else {
+            cheeseApi.getCheeses(params.requestedInitialKey, limit = params.requestedLoadSize)
+                .blockingGet()
+                .response()?.body()?.let {
+                    callback.onResult(it.cheeses)
+                }
+        }
     }
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Cheese>) {
