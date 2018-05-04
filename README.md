@@ -1,6 +1,8 @@
 # Cheese 
 This sample application shows you how the Paging Library works with a REST API.
 
+![Demo](https://raw.githubusercontent.com/jungilhan/cheese-aac-paging-sample/master/demo.gif)
+
 ### Staring the Server
 ```
 $ cd server
