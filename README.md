@@ -12,6 +12,8 @@ $ . venv/bin/activate
 
 ### APIs
 #### Get Cheeses
+This server provides Id-based paging that supports bidirectional pagination.
+
 ```[GET] http://127.0.0.1:5000/cheeses.json?since=5&limit=2```
 
 #### Parameters
@@ -19,6 +21,7 @@ Name | Type | Description
 ---- | ---- | -----------
 since |	int | The integer ID of the last cheese that you've seen.
 until |	int | The integer ID of the first cheese that you've seen.
+around | int | The integer ID of the middle cheese that you've seen.
 limit | int | The maximum number of cheeses that may be returned.
 
 
