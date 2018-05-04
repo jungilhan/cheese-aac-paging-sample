@@ -45,7 +45,7 @@ class LikingCheese(Resource):
         abort_if_cheese_doesnt_exist(cheese_id)
         cheese = find(cheese_id)
         cheese['like'] += 1
-        return cheese, 201
+        return cheese, 200
 
 class CountingCheese(Resource):
     def get(self):
