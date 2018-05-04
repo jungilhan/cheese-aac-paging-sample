@@ -19,17 +19,22 @@ class CheeseList(Resource):
     def get(self):
         args = request.args
         if len(args) == 0 or args['limit'].isnumeric() == False:
-            abort(400, message="Query strings named [since|until] and limit must be passed.")
+            abort(400, message="Query strings named [since|until|around] and limit must be passed.")
 
         if 'since' in args:
             since = int(args['since']) if args['since'].isnumeric() else 0
-            start = min(get_next_index(since), len(CHEESES) - 1)
+            start = max(get_next_index(since), 0)
             end = min(start + int(args['limit']), len(CHEESES))
             return {'cheeses': CHEESES[start:end], 'total': len(CHEESES)}
         elif 'until' in args:
             until = int(args['until']) if args['until'].isnumeric() else 0
             end = get_index(until)
             start = max(end - int(args['limit']), 0)
+            return {'cheeses': CHEESES[start:end], 'total': len(CHEESES)}
+        elif 'around' in args:
+            middle = int(args['around']) if args['around'].isnumeric() else 0
+            start = max(get_index(middle) - (int(args['limit']) / 2), 0)
+            end = min(start + int(args['limit']), len(CHEESES))
             return {'cheeses': CHEESES[start:end], 'total': len(CHEESES)}
         else:
             end = int(args['limit'])
